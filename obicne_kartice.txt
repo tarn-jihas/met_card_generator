@@ -1,0 +1,58 @@
+Pitanje: Šta su kombinaciona kola i kako se razlikuju od sekvencijalih kola?;Kombinaciona kola ne poseduju memoriju, a njihov ponašanje je potpuno specificirano istinitosnom tablicom ili skupom jednačina. Sekvencijala kola poseduju memoriju i njihov ponašanje je određeno prethodnim stanjem memorije i ulaznim kombinacijama.
+Pitanje: Kako se ponašaju kombinaciona kola i kako se to razlikuje od odziva sekvencijalih kola?;Kombinaciona kola preslikavaju ulazne podatke u izlazne u jednom koraku, dok sekvencijala kola imaju memoriju koja čuva prethodno stanje i utiče na njihov odziv. Odziv kombinacionih kola je veoma brzo, dok sekvencijala kola mogu imati kašnjenje zbog memorije.
+Pitanje: Koja je uloga memorijskih i registarskih elemenata u digitalnim kolima?;Memorijski i registarski elementi služe za skladištenje informacija i realizaciju raznih funkcionalnosti u kolima. Oni mogu biti pomerački, brojački ili registri po modulu M, koji se koriste za različite svrhe u digitalnim sistemima.
+Pitanje: [CLOZE] U ovom tekstu, {c1::kombinaciona kola} se koriste za {c2::preslikavanje ulaznih podataka u izlazne}.?;U ovom tekstu, kombinaciona kola se koriste za preslikavanje ulaznih podataka u izlazne, što omogućava brzo izračunavanje i obradjivanje informacija.
+[OBICNA] Pitanje: Šta je kombinaciono kolo?;Kombinaciono kolo je kolo čije je vreme odziva nula U.
+[OBICNA] Kako se opisuje ponašanje kombinacionog kola sa binarnim signaleima?;Ponašanje se opisuje istinitosnom tablicom koja ima 2 vrsta za svaku ulaznu kombinaciju.
+[OBICNA] Zašto je potrebna efikasnija metoda za opis ponašanja kombinacionih kola?;Zbog astronomske veličine istinitosnih tabela koje bi bile potrebne za opisovanje radnih koraka.
+Pitanje: Šta su sekvencijalna kola i kako se ponašaju?;Sekvencijalna kola su kola koja prolaze kroz sekvencu stanja i ponašaju se na ovaj način. Oni moraju da pamte parcijalne rezultate između koraka.
+Pitanje: Koja je prednost sekvencijalnog rada u odnosu na kombinacione logike?;Prednost je ta što je za izvršenje svakog koraka potrebno ugraditi jednostavniji hardver.
+Pitanje: Kako se razlikuju sekvencijalna kola i kola koja poseduju memoriju?;Oni su sinonimi, što znači da imaju slične karakteristike i funkcije.
+Pitanje: Kako se implementacija zadatka pomoću kombinacione logike razlikuje od sekvencijalne logike?;Kombinaciona logika rezultira kraćim vremenom generisanja rezultata, ali obim hardvera je veći.
+Pitanje: Šta se događa kada su oba ulaza na 0 u Q i Q?;Izlaz Q bude na 1, a Q na 0. Kolo postaje stabilno sa Q na 1 i Q na 0.
+Pitanje: Kako se ponaša izlaz G2 kada je izlaz Q na 1?;Izlaz G2 bude 0, što dovodi do stabilnog stanja kola sa Q=1 i Q=0.
+Pitanje: Koja je uloga Ukrštenog NOR-a (SR leča)?;SR leč se koristi za postavljanje i resetovanje izlaza Q i Q. On omogućava kontrolu nad stanjem memorijskih kola.
+Pitanje: [CLOZE] Kombinacija ulaza {c1::Set=1} i {c2::Reset=1} nije dozvoljena jer {c3::obično dovodi do kontradikcije}.?;Kombinacija ulaza Set=1 i Reset=1 nije dozvoljena jer obično dovodi do kontradikcije sa uslovom da su Q i Q komplementarni.
+Pitanje: [CLOZE] Kako se leč {c1::eliminiše neželjeno nedefinisano stanje} u SR leču?;Leč se eliminiše neželjeno nedefinisano stanje u SR leču tako što se obezbedi da ulazi S i R ne budu nikada istovremeno jednaki 1. Ovo se izvodi korišćenjem D leča.
+Pitanje: Šta je problem trke?;Problem trke se odnosi na neželjenu kombinaciju kašnjenja signala u leču, koja rezultuje višestrukim promjenama stanja i novim neodređenim stanjima.
+[CLOZE] Kada je C=1, izlazni signal {c1::(Q ili Q)} se vraća preko {c2::povratne grane}.?;Kada je C=1, izlazni signal (Q ili Q) se vraća preko povratne grane, što može uzrokovati problem trke.
+Pitanje: Kako se rešava problem trke?;Da bi se ograničio memorijski element na jednu promenu stanja po koraku, koriste se netransparentni memorijski elementi kao što su flip-flopovi.
+[CLOZE] Slika 2.4 prikazuje tipičan način korišćenja lečeva u {c1::računarskom ulazno/izlaznom kolu}.?;Slika 2.4 prikazuje tipičan način korišćenja lečeva u računarskom ulazno/izlaznom kolu, gde se koriste flip-flopovi kao memorijski elementi.
+Pitanje: Koje su glavne komponente bistabilnog memorijskog kola?;Bistabilno memorijsko kolo sadrži ulaz(e) X, izlaz podataka Q i upravljački(e) ulaz(e) C. Relacija za prelaz iz jednog stabilnog stanja u drugo prikazana je na slici 5.
+Pitanje: Šta je 4-bitni registar?;4-bitni registar je vrsta memorijskog uređaja koji može pohraniti 4 bita podataka.
+Pitanje: Koje su osnovne značajke osnovne varijante 4-bitnog registra?;Osnovna varijanta 4-bitnog registra, kao što je prikazano na Sl 1, može se proširiti dodavanjem različitih upravljačkih signala.
+Pitanje: Kako se može proširiti funkcionalnost 4-bitnog registra?;Funkcionalnost 4-bitnog registra može se proširiti dodavanjem signala za asinhrono resetovanje i setovanje, zamenom jednostavnih flip-flopova sa flip-flopovima sa ulazima za direktno postavljanje.
+Pitanje: Šta je registar sa dozvolom?;Registar sa dozvolom je tip registra koji omogućava kontrolu upisa novog podatka. Korišćenjem upravljačkog signala Enable (En), registar dozvoljava upis novog podatka kada je En=1. Ako je En=0, podatak koji je već upisan se vraća i ponovo upisuje u registar.
+Pitanje: Kako se registar sa dozvolom razlikuje od običnog registra?;Registar sa dozvolom ima dodatnu mogućnost kontrole upisa, što omogućava da se podaci upisuju samo kada je to potrebno. Ovo se postiče korišćenjem signal En, koji dozvoljava ili zabranjuje upis novog podatka.
+Pitanje: Kako se izbor između ulaznog podatka i podatka u registru ostvaruje u registru sa dozvolom?;Izbor se ostvaruje korišćenjem multipleksera 2‐u‐1. Kada je En=1, multiplekser omogućava upis novog ulaznog podatka u registar. Ako je En=0, podatak koji je već upisan se vraća i ostaje u registru.
+Pitanje: [CLOZE] U registru sa dozvolom, kada je {c1::En=1}, {c2::novi podatak se upisuje u registar}.?;U registru sa dozvolom, kada je En=1, novi podatak se upisuje u registar.
+Pitanje: [CLOZE] Kada je {c1::En=0}, {c2::podatak koji je već upisan u registar se vraća na ulaze flip‐flopova}.?;Kada je En=0, podatak koji je već upisan u registar se vra
+Kako li se registar postavlja u režim pomeranja?;Shift signal koji je jednak 1.
+Šta predstavlja RAM memorija?;Memoriju sa proizvoljnim pristupom (Random-access memory) koja je sporija i ima veći kapacitet od registarskog fajla.
+Kako se RAM memorija simbolički predstavlja?;Polje memorijskih ćelija, adresni dekoder i ulazno/izlazni (U/I) baferi.
+Koja je uloga RWS linije?;Određuje operaciju memorije, upis ili čitanje.
+Kako se zovu memorijske ćelije koje zadržavaju svoj sadržaj nakon isključenja napajanja?;Postojane memorije.
+Koje memorije se koriste kada je potrebna velika količina memorije i brzi pristup?;SRAM memorije.
+Kako se zovu memorije koje gubiju svoj sadržaj kada se isključi napajanje?;Nepostojane memorije.
+Kako se zove proces u kome se memorijski sadržaj osvežava ili obnavlja?;Osvežavanje memorije.
+Kako se podaci ponašaju kada se upisuju u stek?;Podaci se smeštaju na vrh steka, a prethodno upisani podaci spuštaju za jednu poziciju.
+Koje su operacije povezane sa upisom i čitanjem podataka u stek?;Operacije push (upis) i pop (čitanje) određuju kretanje podataka u steku.
+Šta je red čekanja (queue) i kako se koristi?;Red čekanja je struktura memorije koja se koristi za uravnoteženje zahteva za obradom po principu FIFO (First-In-First-Out).
+Kako se zove kombinacioni modul sa više ulaza i izlaza koji obavlja funkciju dekodiranja binarnih podataka?;Dekoder
+Koja je kombinacija ulaza za aktivaciju izlaza Y3 na Dekoderu 3/8?;011
+Koje su karakteristike Multipleksera 8/1?;8 ulaza, 3 selekciona signala i jedan izlaz Y
+Šta je potrebno za određivanje određenog ulaza na izlaz Y u Multiplekseru?;Binarna kombinacija selekcionog signala
+Kako se zove kombinacioni modul koji ima više ulaza, selekcionih signala i jedan izlaz Y, i koji šalje određeni ulaz na izlaz u zavisnosti od selekcionog signala?;Multiplekser
+Koji je uloga demultiplekser u kombinacionom modulu?;Demultiplekser je kombinacioni modul koji selektuje izlaze na osnovu binarne kombinacije selekcionih signala.
+Kako se demultiplekser razlikuje od multiplekser?;Demultiplekser ima više izlaza i jedan ulaz, dok multiplekser ima više ulaza i jedan izlaz.
+Šta je potpuni sabirač?;Potpuni sabirač je kombinacioni modul koji sabira dva ulazna signala i proizvodi rezultat sabiranja i signal prenos.
+Koje su dva izlaza potpunog sabirača?;Izlazi potpunog sabirača su rezultat sabiranja i signal prenos (Carry Out).
+Kako se zove brojač koji broji po modulu M?;Broj po modulu M.
+Koje je maksimalno vrednost koja se može dobiti korišćenjem brojača po modulu 13?;12.
+Koliko bita treba za brojač po modulu 13?;4 bita.
+Kako se naziva proces proširenja memorijskog modula po vertikali?;Proširenje po vertikali.
+Pitanje: [CLOZE] Za video materijal o Karnoovim mapama, morate da {c1::otvorite} LAMS lekciju {c2::SR Latch?;NOR and NAND SR Latch}.
+Odgovor: Za video materijal o Karnoovim mapama, morate da otvorite LAMS lekciju SR Latch?;NOR and NAND SR Latch.
+Koja je predstavljana vrsta latch kola u lekciji?;SR-latch
+Kako se izračunava izlaz sekvencijalnih kola?;Izlaz se računa u zavisnosti od trenutnih stanja na ulazu i prethodnih izlaza.
+Koje vrste memorije su spomenute u lekciji i za šta se koriste?;Stack i queue memorija, koje se koriste u različitim realizacijama.

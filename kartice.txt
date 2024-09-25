@@ -1,0 +1,127 @@
+Šta su kombinaciona kola u digitalnoj logici?|Kombinaciona kola u digitalnoj logici su ona koja ne poseduju memoriju i čije se ponašanje potpuno specificira istinitosnom tablicom ili skupom jednačina.
+Kako se obavlja izračunavanje u kombinacionim kolima?|Izračunavanje u kombinacionim kolima se obavlja u jednom koraku, preslikavajući ulazne podatke u izlazne.
+Koja je karakteristika vremena odziva kombinacionih kola?|Vreme odziva kombinacionih kola je veoma kratko, reda nanosekunda ili kraće, pa se smatra da je odziv trenutan.
+Stoje li kombinaciona kola u potpunosti definisana istinitosnom tablicom?|Da, kombinaciona kola su u potpunosti definisana istinitosnom tablicom ili skupom jednačina.
+Šta su sekvencijalna kola u digitalnoj logici?|Sekvencijalna kola u digitalnoj logici su ona koja poseduju memoriju i čiji se trenutni izlaz računa ne samo u zavisnosti od trenutnih stanja na ulazu, već i od prethodnih izlaza.
+Koji su primeri osnovnih sekvencijalnih kola?|Primeri osnovnih sekvencijalnih kola su SR-latch kolo i D-flip-flop.
+Kako se koriste SR-latch kolo i D-flip-flop?|SR-latch kolo i D-flip-flop se koriste za skladištenje informacija i realizaciju memorijskih i registarskih elemenata.
+Šta su pomerački i brojački registri?|Pomerački i brojački registri su registri koji se koriste za realizaciju memorijskih i registarskih elemenata u digitalnoj logici.
+Šta predstavljaju RAM, SRAM i DRAM?|RAM je tip memorije koja se sastoji od SRAM i DRAM. SRAM je brži tip RAM memorije sa statičkim čuvarima, dok je DRAM sporiji tip sa dinamičkim čuvarima.
+Šta su stack i queue memorija?|Stack i queue memorija su strukture podataka koje se uveliko koriste u različitim realizacijama digitalne logike, omogućavajući pristup podacima na jednom kraju (stack) ili na oba kraja (queue).
+Koji su primeri kola koja su pokazana na vežbama?|Na vežbama su pokazana kola kao što su koder/dekoder, multiplekser/demultiplekser, brojači i memorijski moduli.
+Šta su sekvencijalna kola?|Sekvencijalna kola su digitalna kola koja izvršavaju specificirani zadatak kao sekvencu koraka i sadrže memorijske elemente koji zadržavaju vrednosti logičkih signala.
+Kako se opisuje rad kombinacionog kola sa n ulaza koje koristi binarne signale?|Rad kombinacionog kola sa n ulaza koje koristi binarne signale se opisuje istinitosnom tablicom koja ima 2 vrste za svaku moguću ulaznu kombinaciju.
+Koliko vrsta ima istinitosna tablica za dvobitni sabirač?|Istinitosna tablica za dvobitni sabirač ima 16 vrsta.
+Kakav je problem sa opisivanjem ponašanja kombinacionih kola sa mnogim ulazima?|Problem je da je potrebna astronomski velika istinitosna tablica, pa se traže efikasniji načini opisivanja.
+Koja su dva sredstva za efikasniji opis ponašanja kombinacionih kola?|Dva sredstva su Bulova algebra i jezici za opis hardvera.
+Šta predstavlja stanje sekvencijalnog kola?|Stanje sekvencijalnog kola predstavlja ukupni sadržaj svih memorijskih elemenata u kolu.
+Šta je prednost sekvencijalnog rada?|Prednost je da je za izvršenje svakog koraka potrebno ugraditi jednostavniji hardver, ali prolazak kroz sekvencu stanja traje duže vreme.
+Koja je razlika između kombinacione i sekvencijalne logike po pitanju brzine i obima hardvera?|Kombinaciona logika rezultira kraćim vremenom generisanja rezultata, ali većim obimom hardvera u odnosu na sekvencijalnu logiku.
+Koliko koraka je potrebno za sabiranje dva n-tobitna broja koristeći sekvencijalnu metodu?|Potrebno je n koraka za sabiranje dva n-tobitna broja koristeći sekvencijalnu metodu.
+Objasni pojam "prenosi jedinicu" u sabiranju binarnih brojeva.|"Prenosi jedinicu" znači da se ako suma izračunata u tekućem koraku premaši vrednost najveće cifre, dodaje jedan na naredni par cifara.
+Šta predstavlja bit prenosa u sabiranju binarnih brojeva?|Bit prenosa je cifra (0 ili 1) koja se generiše u toku prethodnog koraka i dodaje se sumi u tekućem koraku.
+Šta se podrazumeva pod sekundarnim izlazima kod sekvencijalnih kola?|Sekundarni izlazi kod sekvencijalnih kola se koriste da specificiraju naredno stanje koje će se pamtiti u memoriji.
+Kako se definiše trenutno stanje kola?|Trenutno stanje kola se definiše kao odgovarajuća kombinacija sekundarnih ulaznih promenljivih u datom trenutku.
+Koliko tekućih stanja može imati sekvencijalno kolo ako ima m sekundarnih ulaznih promenljivih?|Sekvencijalno kolo može da se nađe u m jednom od 2 različitih tekućih stanja ako ima m sekundarnih ulaznih promenljivih.
+Kako se dele sekvencijalna logička kola?|Sekvencijalna logička kola se mogu podeliti na sinhrona i asinhrona.
+Šta kontrolise promene internih stanja kod sinhronih kola?|Promene internih stanja kod sinhronih kola se kontrolise taktnim signalom ili clock signalom.
+Kako se definiše taktni period?|Taktni period se definiše kao vremenski interval između dve uzastopne promene taktnog signala u istom smeru.
+Kada se obično javljaju prelazi stanja kod sinhronih sekvencijalnih kola?|Prelazi stanja kod sinhronih sekvencijalnih kola obično se javljaju u trenutku kada postoje prelazi taktnih impulsa.
+Kako se nazivaju prelazi taktnih impulsa sa 0 na 1?|Prelazi taktnih impulsa sa 0 na 1 se nazivaju pozitivnim ili usponskim ivicama.
+Šta su bistabilna kola u digitalnoj tehnici?|U digitalnoj tehnici, bistabilna kola se koriste kao memorijski elementi.
+Šta su memorijski elementi u digitalnoj tehnici?|Memorijski elementi u digitalnoj tehnici su elementi koji zadržavaju ili pamte uspostavljeno stanje i koji mogu da ostaju u stabilnim stanjima neograničeno vreme, koja se mogu menjati pod uticajem ulaznih signala. Bistabilna kola su primer memorijskih elemenata koja imaju dva stabilna stanja.
+Koje su osnovne karakteristike memorijskih elemenata?|Osnovne karakteristike memorijskih elemenata su postojanje stabilnih stanja u kojima mogu ostati neograničeno vreme i koja se mogu menjati pod uticajem ulaznih signala.
+Šta je SR latch kolo?|SR latch kolo je najjednostavniji memorijski element koji se koristi za projektovanje digitalnih sistema. Sastoji se od dva unakrsno spregnuta NOR kola i ima dva izlaza koji su komplementarni jedan u odnosu na drugi.
+Kako se eliminiše neželjeno nedefinisano stanje kod SR latch kola?|Neželjeno nedefinisano stanje kod SR latch kola se eliminiše tako što se obezbedi da ulazi S i R nikada nisu istovremeno jednaki 1, što se izvodi kod D latch kola.
+Šta je D latch kolo?|D latch kolo je memorijski element koji ima samo dva ulaza: D (za podatke) i C (upravljački). Komplement ulaza D se dovodi preko NI kola na ulaz S, a ulaz D preko invertora i NI kola na ulaz R. Kada je upravljački ulaz C=0, latch ne može da promeni svoje stanje, dok se ulaz D uzorkuje kada je C=1.
+Koji su dva osnovna tipa bistabilnih kola?|Dva osnovna tipa bistabilnih kola su leč (latch) kola i flip-flopovi.
+Šta se podrazumeva pod "stabilnim stanjima" kod bistabilnih kola?|Stabilna stanja kod bistabilnih kola su stanja u kojima kolo može da ostane neograničeno vreme bez promene stanja, dok se mogu menjati pod uticajem ulaznih signala.
+Objasni pojam "ulazi Set i Reset" kod SR leč kola.|Ulazi Set i Reset kod SR leč kola su ulazi koji služe da se postavi ili resetuje stanje izlaza kola. Kada je ulaz Set postavljen na 1, izlaz Q se postavlja na 1, dok se izlaz Q' postavlja na 0. Kada je ulaz Reset postavljen na 1, izlaz Q se postavlja na 0, dok se izlaz Q' postavlja na 1.
+Objasni pojam "ukršteni NOR" kod SR leč kola.|Ukršteni NOR kod SR leč kola se odnosi na konfiguraciju dva NOR kola koja su povezana tako da izlaz jednog kola služi kao ulaz drugom kolu. Ova konfiguracija omogućava da SR leč kolo memorije informaciju o jednom bitu.
+Šta su osnovni memorijski elementi?|Osnovni memorijski elementi su SR i D lečevi.
+Kada je D=1, šta se desava sa izlazom Q?|Kada je D=1, izlaz Q postavlja se na 1, tj. zaključava se u to stanje.
+Šta se dešava kada je D=0?|Kada je D=0, izlaz Q je 0 i kolo je u stanju reset.
+Šta je logički simbol D?|Logički simbol D je prikazan na slici i predstavlja ulazni signal za D leč.
+Kada se koriste lečevi?|Lečevi se koriste kao elementi za memorisanje (pamćenje) u kolima gde ne postoji direktna povratna veza sa izlaza bilo kog leča preko spoljnih kola na ulaze lečeva.
+Kako se koriste lečevi u računaru?|Računar prihvata podatke sa ulaznog uređaja (tastatura) i generiše podatke na izlaznom uređaju (LED displej) koristeći lečeve.
+Šta su flip-flopovi?|Flip-flopovi su bistabilna kola koja koriste specijalni upravljački signal radi specificiranja trenutaka u kojima se memorija odaziva na promene.
+Zašto flip-flopovi nisu pogodni za korišćenje kod sekvencijalnih kola sa povratnom strukturom?|Zbog transparentnosti urada, kada je C=1, izlazni signal se vraća preko povratne grane na ulaz D, što može uzrokovati višestruke promene i problem trke.
+Kako se ograničava memorijski element na samo jednu promenu stanja po koraku?|Koristeći netransparentne memorijske elemente kao što su flip-flopovi.
+Šta je master leča u D flip-flopu?|Master leča u D flip-flopu je realizovana D lečom i njeno stanje treba kopirati u slave leč.
+Kada se okida D flip-flop koji se okida na ivicu?|D flip-flop koji se okida na ivicu okida se kada se pojavi pozitivna ivica taktnog impulsa.
+Šta je rad master leča kada je C=1?|Rad master leča je zabranjen kada je C=1, tako da stanja oba leča (i master-a i slave-a) ostaju nepromenjena.
+Šta je ivično okidani D flip-flop?|Ivično okidani D flip-flop je tip flip-flopa koga karakteriše promena stanja na pozitivnoj ivici taktnog impulsa.
+Šta su uticaji PR’ i CLR’ upravljačkih signala?|Uticaji PR’ i CLR’ upravljačkih signala su nezavisni od taktnog signala i nazivaju se asinhroni ulazi. Oni se koriste za inicijalizaciju početnog stanja flip-flopa.
+Koje su četiri vrste flip-flopova sa asinhronim ulazima?|Četiri vrste flip-flopova sa asinhronim ulazima su: (a) SR flip-flop; (b) JK flip-flop; (c) D flip-flop; (d) T flip-flop.
+Šta se dešava kada flip-flop poseduje oba asinhrona ulaza?|Ako flip-flop poseduje oba asinhrona ulaza, prioritet imaju oni, a vrednosti ostalih ulaza flip-flopa se ignorišu dok je asinhroni ulaz aktivan.
+Objasni pojam asinhroni ulazi u kontekstu flip-flopova.|Asinhroni ulazi u kontekstu flip-flopova su ulazi koji ne zavise od taktnog signala i imaju prioritet nad svim ostalim sinhronim ulazima. Oni se koriste za postavljanje flip-flopa u poznato početno stanje i nezavisno od ostalih ulaza.
+Šta se dešava sa stanjem slave leča kada se javi pozitivna ivica taktnog ulaza?|Kada se javi pozitivna ivica taktnog ulaza, stanje slave leča se promeni tako da kopira stanje koje je prisutno na izlazu master leča u trenutku pojave pozitivne ivice taktnog impulsa.
+Objasni pojam ivično okidanje u kontekstu flip-flopova.|Ivično okidanje u kontekstu flip-flopova je promena stanja flip-flopa na pozitivnoj ili negativnoj ivici taktnog signala. Ovo omogućava da se stanje flip-flopa menja samo u određenim trenucima, što je važno za sinhronizaciju sa ostalim delovima digitalnog kolaa.
+Kada se koriste asinhroni ulazi SET i CLR?|Asinhroni ulazi SET i CLR se koriste za postavljanje flip-flopa u poznato početno stanje pre početka normalnog sinhronog rada. Oni se koriste kada je neophodno da se flip-flop postavi u određeno stanje nezavisno od taktnog signala i ostalih ulaza.
+Šta su SET i CLR?|SET i CLR su ulazi za direktno postavljanje stanja flip-flopova sa aktivnim niskim naponskim nivoom.
+Šta označavaju kružići na grafičkim simbolima flip-flopova?|Kružići označavaju ulaze za direktno postavljanje sa aktivnim niskim naponskim nivoom.
+Šta je registar?|Registar je memorijska komponenta koja se sastoji od n flip-flopova sa zajedničkim taktnim signalom.
+Šta se understaude pod sinhronizovano sa aktivnom ivicom taktnog signala?|Understaude se da u svaki flip-flop upisuje se jedan bit informacije u trenutku aktivne ivice taktnog signala.
+Kako se može proširiti funkcionalnost osnovne varijante registra?|Funkcionalnost osnovne varijante registra se može proširiti dodavanjem različitih upravljačkih signala, poput signala za asinhrono resetovanje i setovanje.
+Šta se dešava kada je aktiviran signal Rst ili Set?|Kada je aktiviran signal Rst, sadržaj registra se briše ili resetuje na "sve nule". Kada je aktiviran signal Set, sadržaj registra se postavlja na "sve jedinice".
+Šta je pomerački registar?|Pomerački registar je tip registra koji se koristi za pomeranje podataka, a izrađuje se koristeći multiplekser.
+Šta je prednost kontrole upisa u registar?|Kontrola upisa predstavlja korisnu funkciju registra jer omogućava da podatak koji je upisan u registar ostane u registru nekoliko taktnih ciklusa pre nego što se upiše novi podatak.
+Šta su ulazi I, Rst i Set?|Ulazi I, Rst i Set su ulazi registra. Ulaz I je ulaz za podatke, dok su Rst i Set ulazi za resetovanje i setovanje registra.
+Šta je kontrola upisa u registar?|Kontrola upisa u registar se postiže korišćenjem upravljačkog signala Enable (En) koji kada je 1 dozvoljava upis novog podatka u registar.
+Šta je registar sa dozvolom?|Registar sa dozvolom je tip registra koji koristi upravljački signal Enable za dozvoljavanje upisa novog podatka u registar.
+Kako multiplekseri omogućavaju kontrolu upisa u registar sa dozvolom?|Multiplekseri omogućavaju izbor između ulaznog podatka i podatka koji je već u registru, tako da kada je Enable signala jednak 1, ulazni podatak upisuje se u registar.
+Šta je pomerački registar?|Pomerački registar je tip registra koji omogućava pomeranje upisanog sadržaja za jednu bit-poziciju.
+Kako se pomeranje sadržaja kontrolise u pomeračkom registru?|Pomeranje sadržaja u pomeračkom registru kontrolise se upravljačkim signalom Shift. Kada je Shift jednak 1, registar se postavlja u režim pomeranja.
+Šta je RAM memorija?|RAM memorija (Random-Access Memory) je sporija memorija većeg kapaciteta pogodna za dugotrajno smeštanje programa i podataka koji se koriste tokom izračunavanja.
+Kako je RAM memorija organizovana?|RAM memorija je organizovana u vidu polja od 2 vrste sa m bita u svakoj vrsti, sa n adresnih linija za jednoznačnu identifikaciju svake vrste.
+Šta je ulazni signal Chip_select u RAM memoriji?|Ulazni signal Chip_select u RAM memoriji se koristi prilikom konstrukcije većih memorija na bazi memorijskih čipova manjeg kapaciteta, i kada je CS=1, memorija normalno funkcioniše.
+Šta su dva tipa RAM memorije?|Statički RAM (SRAM) i dinamički RAM (DRAM)
+Kako se sprečava pristup memoriji za čitanje ili upis kada je CS=0?|Pristup memoriji za čitanje ili upis se onemogućava kada je CS=0.
+Šta bira memorijska operaciju, upis ili čitanje, u RAM memoriji?|Upravljačka linija Read/write_select (RWS) bira memorijsku operaciju, upis ili čitanje.
+Kada memorija čita svoj sadržaj?|Memorija čita svoj sadržaj sa lokacije određene adresnim linijama kada je RWS=0.
+Kada memorija upisuje sadržaj?|Memorija upisuje sadržaj prisutan na ulaznom portu u lokaciju određenu adresnim linijama kada je RWS=1.
+Kako se smanjuje broj pinova na memorijskom čipu?|Broj pinova na memorijskom čipu se smanjuje objedinjavanjem ulaznog i izlaznog porta u jedinstven ulazno/izlazni port.
+Šta čine statički RAM (SRAM) memorije?|Statički RAM (SRAM) memorije čine: polje memorijskih ćelija, adresni dekoder i ulazno/izlazni (U/I) baferi.
+Kako se realizuje memorijska ćelija u SRAM memoriji?|Memorijska ćelija u SRAM memoriji se realizuje sa daleko manjim brojem tranzistora u odnosu na registarsku ćeliju.
+Kada gubi upisani sadržaj dinamička RAM memorija (DRAM)?|Dinamička RAM memorija (DRAM) gubi upisani sadržaj pri svakom čitanju.
+Zašto je neophodno periodično obnavljati upisani sadržaj u DRAM memoriji?|Neophodno je periodično obnavljati upisani sadržaj u DRAM memoriji zbog spontanog neprevratnog gubitka u vremenu pri pisanju.
+Šta se desava tokom osvežavanja DRAM memorije?|Tokom osvežavanja DRAM memorije, operacije čitanja i upisa se suspenduju.
+Šta su DRAM memorije?|DRAM memorije su vrsta memorije koje se veoma često koriste za projektovanje najrazličitijih elektronskih uređaja zbog njihove niske cene i gustine pakovanja.
+Šta su SRAM memorije?|SRAM memorije su brže od DRAM memorija, ali su skuplje. Pogodne su za primene koje ne zahtevaju veliku količinu memorije i gde je brzi pristup memoriji imperativan zahtev.
+Šta su nepostojane memorije?|Nepostojane memorije su DRAM i SRAM memorije, koje gube svoj sadržaj kada se isključi napajanje.
+Šta su postojane memorije?|Postojane memorije su ROM i PROM memorije, koje zadržavaju sadržaj čak i nakon isključenja napajanja.
+Kako se postiže proširenje memorijske reči?|Proširenje memorijske reči se postiže paralelnim vezivanjem nekoliko memorijskih čipova.
+Kako se realizuju veće memorije?|Veće memorije se realizuju tako što se povezuju nekoliko memorijskih čipova na red, tako da svaki čip sadrži jedan deo od ukupnog broja memorijskih reči.
+Objašnji pojam 'adresni dekoder'.|Adresni dekoder dekodira adresu i selektuje jednu od vrsta radi pristupa svakoj memorijskoj ćeliji.
+Šta se dešava kada su RWS i CS jednaki 1 u selektovanoj vrsti?|Kada su RWS i CS jednaki 1 u selektovanoj vrsti, u selektovanu vrstu upisuje se novi sadržaj.
+Šta se dešava kada je RWS=0 i CS=1?|Kada je RWS=0 i CS=1, podatak iz selektovane vrste se prosleđuje na U/I port preko tro-statičkih bafera.
+Objašnji kako se formira memorija sa većim m.|Memorija sa većim m se formira paralelnim vezivanjem nekoliko memorijskih čipova.
+Objašnji kako se realizuje RAM memorija kapaciteta 16Kx32.|RAM memorija kapaciteta 16Kx32 se realizuje pomoću RAM čipova kapaciteta 16Kx8 putem paralelnog vezivanja nekoliko čipova i podeljivanja adresnih linija, linija CS i RWS, kao i ulazne i izlazne magistrale.
+Stek šta predstavlja?|Stek (stack) je memorijska struktura sa ograničenim pristupom, koja se često koristi u softveru i hardveru. Podacima zapamćenim u steku pristupa se isključivo preko vrha steka.
+Kako se podaci upisuju u stek?|Kada se podatak upisuje u stek (operacija push), on se smešta na vrh steka, a svi prethodno upisani podaci se spuštaju za jednu poziciju niz stek.
+Kako se podaci čitaju iz steka?|Kada se podatak čita iz steka (operacija pop), on se sklanja sa vrha steka, a svi ostali podaci se podižu za jednu poziciju naviše uz stek.
+Šta je FIFO?|FIFO (First-In-First-Out) je struktura koja se često koristi kada treba uravnotežiti zahteve za nekom obradom. Prvi koji stigne čeka prvi biva opslužen.
+Za šta se koristi FIFO?|FIFO se koristi kada proizvođač generiše podatke brže nego što potrošač može da ih obrađuje, da bi se izbeglo preopterećenje potrošača.
+Šta predstavlja red čekanja ili queue?|Red čekanja ili queue je struktura koja se često koristi kada treba uravnotežiti zahteve za nekom obradom. Sličan je FIFO konceptu.
+Kako se razlikuju stack i queue memorija?|Stack i queue memorija se razlikuju po načinu upisa i čitanja podataka. U stacku se podaci upisuju i čitaju isključivo sa vrha (LIFO), dok se u queueu podaci upisuju na kraj, a čitaju se sa početka (FIFO).
+Šta je koder?|Koder je kombinacioni modul sa više ulaza i više izlaza. On obavlja funkciju kodiranja informacija tako što doveden signal na samo jedan ulaz modula rezultuje u izlaznu informaciju u vidu binarnog koda sa (n) cifara.
+Kako funkcioniše koder 8/3?|Koder 8/3 ima 8 (2^3) ulaza i 3 izlaza. Kada se signal dovede na određeni ulaz, na izlazu se generiše binarna kombinacija bitova koja odgovara broju ulaza.
+Šta je dekoder?|Dekoder je kombinacioni modul sa više ulaza i više izlaza. On obavlja funkciju dekodiranja binarno kodirane informacije koja je dovedena na ulaz.
+Kako funkcioniše dekoder 3/8?|Dekoder 3/8 ima 3 ulaza i 8 (2^3) izlaza. Na ulaz se dovodi binarna kombinacija 3 bita. Kao izlaz se aktivira samo jedan izlaz koji odgovara toj binarnoj kombinaciji.
+Šta je multiplekser?|Multiplekser je kombinacioni modul koji ima (n) ulaza, (m) selekcionih signala i jedan izlaz Y. U zavisnosti od binarne kombinacije selekcionog signala, on šalje određeni ulaz direktno na izlaz Y.
+Šta je demultiplekser?|Demultiplekser je kombinacioni modul koji ima (n) izlaza, (m) selekcionih signala i jedan ulaz Y. U zavisnosti od binarne kombinacije selekcionih signala, on šalje ulaz Y na jedan od izlaza.
+Kako funkcioniše multiplekser 8/1?|Multiplekser 8/1 ima 8 (2^3) ulaza i 3 selekciona signala. U zavisnosti od binarne kombinacije selekcionog signala, on šalje određeni ulaz direktno na izlaz.
+Kako funkcioniše demultiplekser 1/8?|Demultiplekser 1/8 ima 8 (2^3) izlaza i 3 selekciona signala kao i jedan ulaz. U zavisnosti od binarne kombinacije kontrolnih signala, on šalje ulaz Y na jedan od izlaza.
+Šta su osnovne karakteristike potpunog sabirača?|Potpuni sabirač ima 3 ulazna signala. Dva ulazna signala su brojevi koji se sabiraju, a treći signal je prenos iz prethodnog sabiranja. Potpunisabiračima ima 2 izlaza, jedan je rezultat sabiranja, a drugi signal predstavlja prenos.
+Šta predstavlja brojač?|Brojači su sekvencijalni moduli koji nailaskom na takt daju binarni izlaz povećan ili smanjen u odnosu na prošli izlaz i zavisnost od vrste brojača (krementalni ili dekrementalni).
+Šta je moduo brojača?|Broj različitih cifara koje brojač može da generiše nazivamo moduo brojača.
+Kako brojač po modulu M radi?|Brojač po modulu M broji od 0 do M-1 nakon čega se resetuje i broji ponovo.
+Šta je dekoder 2/4?|Dekoder 2/4 je dekoder koji ima 2 ulazna signala i 4 izlazna signala, i služi za selekciju jednog od 4 izlaza u zavisnosti od ulaznih signala.
+Kako da uradim minimalizaciju koristeći Karnoove mape?|Na osnovu datih funkcija, uradite minimalizaciju koristeći Karnoove mape tako što ćete svaku funkciju predstaviti u obliku Karnove mape, onda je spojiti i dobiti minimalnu logičku funkciju.
+Šta predstavljaju dodatni materijali u 4. lekciji?|Dodatni materijali u 4. lekciji su Karnoove mape i video materijal koji se može pogledati otvaranjem LAMS lekcije.
+Šta su SR Latch kola?|SR Latch kola su tip sekvencijalna kola koja mogu skladištiti jedan bit informacije.
+Kako se modulo M računa za realizaciju modula brojača?|Modulo M se računa tako što se poslednja vrednost broja indeksa pomnoži sa 2.
+Šta predstavljaju flip-flopovi?|Flip-flopovi su tip sekvencijalnih kola koja mogu skladištiti jedan bit informacije i imaju sposobnost prelaska iz jednog stanja u drugo.
+Kako se predaje domaći zadatak #4?|Domaći zadatak #4 se predaje odgovarajućem predmetnom asistentu sa predmetnim profesorom u CC koristeći .doc/docx format uputstva dato u prvoj lekciji.
+Šta su stack i queue memorija?|Stack i queue memorija su tipovi memorija koji se koriste za skladištenje informacija u određenom redu i imaju različite strategije za dodavanje i skidanje podataka.
+Koje je literature preporučena za ovo poglavlje?|Preporučena literatura za ovo poglavlje je knjiga A. Tanenbaum, Structured Computer Organization, Chapter 03, pp. 169 - 184.
