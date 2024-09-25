@@ -1,0 +1,5 @@
+mistralai
+tiktoken
+pdfplumber
+python-dotenv
+tinydb
