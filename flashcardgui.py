@@ -1,167 +1,104 @@
-import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
 import os
 import threading
-import traceback
 import time
-from dotenv import load_dotenv
-from tinydb import TinyDB
+import traceback
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
 
-from anki_flash import save_to_file, clear_cache, process_multiple_pdfs, FlashcardGenerationError, UnauthorizedError
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+from anki_flash import save_to_file, FlashcardGenerationError, UnauthorizedError, filter_pdf_pages, create_flashcards_with_rate_limit
 
 load_dotenv()
+API_KEY = os.getenv('GEMINI_API_KEY')
+MODEL_NAME = "gemini-1.5-flash-002"
+MIN_CARDS = 75
+MAX_CARDS = 200
 
+if API_KEY:
+    genai.configure(api_key=API_KEY)
+    model = genai.GenerativeModel(model_name=MODEL_NAME)
+else:
+    print("GEMINI_API_KEY not found in .env file. Set API key using the GUI.")
 
 class FlashcardGeneratorGUI:
     def __init__(self, master):
         self.master = master
         master.title("MET Flashcard Generator")
-        master.geometry("400x520")
-        master.resizable(False, False)
+        master.geometry("400x450")
+        master.configure(bg="#f0f0f0")
 
+        self.setup_styles()
+        self.create_variables()
+        self.create_widgets()
 
-        self.bg_color = "#f0f0f0"
-        self.button_color = "#4a7abc"
-        self.text_color = "#333333"
-        self.title_font = ("Helvetica", 16, "bold")
-        self.label_font = ("Helvetica", 10)
-        self.button_font = ("Helvetica", 10, "bold")
+        if not API_KEY:
+            self.master.after(100, self.open_api_key_modal)
 
-        master.configure(bg=self.bg_color)
+    def setup_styles(self):
+        self.style = ttk.Style()
+        self.style.theme_use('clam')
+        self.style.configure('Blue.TButton', background="#4a7abc", foreground='white', padding=5)
+        self.style.configure('Red.TButton', background="#bc4a4a", foreground='white', padding=5)
+        self.style.configure("Blue.Horizontal.TProgressbar", troughcolor="#f0f0f0", background="#4a7abc")
 
+    def create_variables(self):
+        self.pdf_files = []
         self.pdf_paths = []
         self.output_path = tk.StringVar()
         self.output_name = tk.StringVar()
         self.stop_processing = False
-
-        self.start_time = None
         self.is_processing = False
-        self.total_chunks = 0
-        self.processed_chunks = 0
-        self.last_chunk_time = None
-        self.current_pdf = None
-        self.current_pdf_index = 0
-
-        self.create_widgets()
-        self.style_config()
-
-        self.current_pdf_chunks = 0
-        self.current_pdf_processed_chunks = 0
-        self.chunk_processing_time = 0
-
-        self.check_existing_api_key()
         self.progress = tk.DoubleVar()
-        self.chunking_complete = False
         self.api_key_modal_open = False
-        self.api_key_entry = None
 
+    def create_widgets(self):
+        tk.Label(self.master, text="MET Flashcard Generator", font=("Helvetica", 16, "bold")).grid(row=0, column=0, columnspan=2, pady=(10, 5))
 
-    def open_api_key_modal(self):
-        if self.api_key_modal_open:
-            return
-    def create_widgets (self):
-        # Title
-        tk.Label(self.master, text="MET Flashcard Generator", font=self.title_font, bg=self.bg_color,
-                 fg=self.text_color).pack(pady=10)
+        ttk.Button(self.master, text="Select PDFs", command=self.browse_pdfs, style='Blue.TButton').grid(row=1, column=0, columnspan=2, sticky="ew", padx=20)
+        self.pdf_listbox = tk.Listbox(self.master, width=40, height=5)
+        self.pdf_listbox.grid(row=2, column=0, columnspan=2, sticky="ew", padx=20, pady=(0, 5))
 
-        # Frame for file selection
-        file_frame = tk.Frame(self.master, bg=self.bg_color)
-        file_frame.pack(fill='x', padx=20, pady=5)
+        ttk.Button(self.master, text="Select Output File", command=self.browse_output, style='Blue.TButton').grid(row=3, column=0, sticky="w", padx=20)
+        self.output_entry = tk.Entry(self.master, textvariable=self.output_path, width=25, state='readonly')
+        self.output_entry.grid(row=3, column=1, sticky="e", padx=20)
 
-        # PDF selection
-        ttk.Button(file_frame, text="Select PDFs", command=self.browse_pdfs, style='Blue.TButton').pack(fill='x',
-                                                                                                        pady=5)
+        self.generate_button = ttk.Button(self.master, text="Generate Flashcards", command=self.generate_flashcards, style='Blue.TButton', state='disabled' if not API_KEY else 'normal')
+        self.generate_button.grid(row=5, column=0, columnspan=2, pady=10, padx=20, sticky="ew")
 
-        # Listbox for selected PDFs
-        self.pdf_listbox = tk.Listbox(file_frame, width=50, height=5, font=self.label_font, relief='flat', bd=1)
-        self.pdf_listbox.pack(fill='x', pady=5)
+        self.stop_button = ttk.Button(self.master, text="Stop Generation", command=self.stop_generation, style='Red.TButton', state='disabled')
+        self.stop_button.grid(row=6, column=0, columnspan=2, pady=(0, 10), padx=20, sticky="ew")
 
-        # Output file selection
-        output_frame = tk.Frame(file_frame, bg=self.bg_color)
-        output_frame.pack(fill='x', pady=5)
-        ttk.Button(output_frame, text="Select Output File", command=self.browse_output, style='Blue.TButton').pack(
-            side='left')
-        tk.Entry(output_frame, textvariable=self.output_name, width=30, font=self.label_font, state='readonly',
-                 relief='flat').pack(side='left', padx=5)
+        ttk.Button(self.master, text="Set API Key", command=self.open_api_key_modal, style='Blue.TButton').grid(row=7, column=0, columnspan=2, sticky="ew", padx=20)
 
-        # Clear cache option
-        self.clear_cache_var = tk.BooleanVar()
-        tk.Checkbutton(self.master, text="Clear cache before processing", variable=self.clear_cache_var,
-                       font=self.label_font, bg=self.bg_color, fg=self.text_color).pack(pady=5)
+        self.progressbar = ttk.Progressbar(self.master, variable=self.progress, maximum=100, length=360, style="Blue.Horizontal.TProgressbar")
+        self.progressbar.grid(row=8, column=0, columnspan=2, pady=(0, 5), padx=20, sticky="ew")
 
-        # Generate button (initially disabled)
-        self.generate_button = ttk.Button(self.master, text="Generate Flashcards", command=self.generate_flashcards,
-                                          style='Blue.TButton', state='disabled')
-        self.generate_button.pack(pady=10)
-
-        # Stop button (initially disabled)
-        self.stop_button = ttk.Button(self.master, text="Stop Generation", command=self.stop_generation,
-                                      style='Red.TButton', state='disabled')
-        self.stop_button.pack(pady=5)
-
-        # Set API Key button
-        ttk.Button(self.master, text="Set API Key", command=self.open_api_key_modal, style='Blue.TButton').pack(pady=5)
-
-        # Progress bar
-        self.progress = tk.DoubleVar()
-        self.progressbar = ttk.Progressbar(self.master, variable=self.progress, maximum=100, length=360,
-                                           style="Blue.Horizontal.TProgressbar")
-        self.progressbar.pack(pady=10)
-
-        # Status label
-        self.status_label = tk.Label(self.master, text="", font=self.label_font, bg=self.bg_color, fg=self.text_color,
-                                     wraplength=360)
-        self.status_label.pack(pady=5)
-
-    def style_config(self):
-        style = ttk.Style()
-        style.theme_use('clam')
-
-        # Configure blue button style
-        style.configure('Blue.TButton',
-                        background=self.button_color,
-                        foreground='white',
-                        font=self.button_font,
-                        padding=5,
-                        relief='flat')
-        style.map('Blue.TButton',
-                  background=[('active', '#3a5a8c'), ('pressed', '#2a4a7c')],
-                  relief=[('pressed', 'sunken')])
-
-        # Configure red button style
-        style.configure('Red.TButton',
-                        background='#bc4a4a',
-                        foreground='white',
-                        font=self.button_font,
-                        padding=5,
-                        relief='flat')
-        style.map('Red.TButton',
-                  background=[('active', '#8c3a3a'), ('pressed', '#7c2a2a')],
-                  relief=[('pressed', 'sunken')])
-
-        # Configure blue progress bar
-        style.configure("Blue.Horizontal.TProgressbar",
-                        troughcolor=self.bg_color,
-                        background=self.button_color,
-                        darkcolor=self.button_color,
-                        lightcolor=self.button_color)
+        self.status_label = tk.Label(self.master, text="", wraplength=360)
+        self.status_label.grid(row=9, column=0, columnspan=2, pady=(0, 10), padx=20, sticky="ew")
 
     def browse_pdfs(self):
         filenames = filedialog.askopenfilenames(filetypes=[("PDF files", "*.pdf")])
-        if filenames:
-            self.pdf_paths = list(filenames)
-            self.pdf_listbox.delete(0, tk.END)
-            for filename in self.pdf_paths:
-                self.pdf_listbox.insert(tk.END, os.path.basename(filename))
+        self.pdf_files = []
+        self.pdf_paths = list(filenames)
+        for file in filenames:
+            output_path = filter_pdf_pages(file, file)
+            if output_path:
+                uploaded_pdf = genai.upload_file(output_path)
+                self.pdf_files.append(uploaded_pdf)
 
-            # Set default output path
+        self.pdf_listbox.delete(0, tk.END)
+        for filename in self.pdf_paths:
+            self.pdf_listbox.insert(tk.END, os.path.basename(filename))
+
+        if self.pdf_paths:
             default_output = os.path.splitext(self.pdf_paths[0])[0] + "_flashcards.txt"
             self.output_path.set(default_output)
             self.output_name.set(os.path.basename(default_output))
 
     def browse_output(self):
-        initial_dir = os.path.dirname(self.output_path.get()) if self.output_path.get() else os.path.dirname(
-            self.pdf_paths[0]) if self.pdf_paths else os.path.expanduser("~")
+        initial_dir = os.path.dirname(self.output_path.get()) if self.output_path.get() else os.path.dirname(self.pdf_paths[0]) if self.pdf_paths else os.path.expanduser("~")
         filename = filedialog.asksaveasfilename(
             defaultextension=".txt",
             filetypes=[("Text files", "*.txt")],
@@ -178,63 +115,51 @@ class FlashcardGeneratorGUI:
 
         self.api_key_modal_open = True
         api_key_window = tk.Toplevel(self.master)
-        api_key_window.title("Enter Mistral API Key")
+        api_key_window.title("Enter Google API Key")
         api_key_window.geometry("300x120")
         api_key_window.resizable(False, False)
-        api_key_window.configure(bg=self.bg_color)
+        api_key_window.configure(bg="#f0f0f0")
 
-        tk.Label(api_key_window, text="API Key:", font=self.label_font, bg=self.bg_color).pack(pady=5)
-        api_key_entry = tk.Entry(api_key_window, width=40, show="*", font=self.label_font)
+        tk.Label(api_key_window, text="API Key:", font=("Helvetica", 10), bg="#f0f0f0").pack(pady=5)
+        api_key_entry = tk.Entry(api_key_window, width=40, show="*", font=("Helvetica", 10))
         api_key_entry.pack(pady=5)
 
         def save_api_key():
             api_key = api_key_entry.get()
             if api_key:
-                os.environ['MISTRAL_API_KEY'] = api_key
-                # Update the .env file
+                os.environ['GOOGLE_API_KEY'] = api_key
                 with open('.env', 'w') as f:
-                    f.write(f"MISTRAL_API_KEY={api_key}")
+                    f.write(f"GOOGLE_API_KEY={api_key}")
                 messagebox.showinfo("Success", "API Key saved successfully!")
-                print(f"Updated MISTRAL_API_KEY: {os.getenv('MISTRAL_API_KEY')}")
-                self.generate_button.config(state='normal')  # Enable the generate button
+                print(f"Updated GOOGLE_API_KEY: {os.getenv('GOOGLE_API_KEY')}")
+                self.generate_button.config(state='normal')
                 api_key_window.destroy()
+                self.api_key_modal_open = False
             else:
                 messagebox.showerror("Error", "Please enter an API Key.")
 
         ttk.Button(api_key_window, text="Save", command=save_api_key, style='Blue.TButton').pack(pady=10)
 
-        # Make the API key window modal
         api_key_window.transient(self.master)
         api_key_window.grab_set()
         self.master.wait_window(api_key_window)
 
     def generate_flashcards(self):
-        if not self.pdf_paths or not self.output_path.get():
+        if not self.pdf_files or not self.output_path.get():
             messagebox.showerror("Error", "Please select at least one PDF and the output file path.")
             return
 
-        # Check if file exists and ask user what to do before processing
         if os.path.exists(self.output_path.get()):
-            user_choice = messagebox.askyesno("File Exists",
-                                              "The output file already exists. Do you want to overwrite it?")
+            user_choice = messagebox.askyesno("File Exists", "The output file already exists. Do you want to overwrite it?")
             if not user_choice:
-                return  # User chose not to overwrite, so we stop here
+                return
 
         self.reset_gui_state()
-
-        if self.clear_cache_var.get():
-            clear_cache()
-
-        # Reset processing variables
         self.start_time = time.time()
         self.is_processing = True
         self.stop_processing = False
-
-        # Disable generate button and enable stop button
         self.generate_button.config(state='disabled')
         self.stop_button.config(state='normal')
-
-        # Start processing in a separate thread to keep GUI responsive
         self.status_label.config(text="Processing...")
         self.processing_thread = threading.Thread(target=self.process_pdfs_thread, daemon=True)
         self.processing_thread.start()
@@ -250,49 +175,37 @@ class FlashcardGeneratorGUI:
         self.master.update_idletasks()
 
     def reset_gui_state(self):
-        """Reset the GUI state before starting a new process."""
         self.progress.set(0)
-        self.status_label.config(text="", fg=self.text_color)
+        self.status_label.config(text="", fg="black")
         self.progressbar.configure(style="Blue.Horizontal.TProgressbar")
 
     def process_pdfs_thread(self):
         try:
-            self.start_time = time.time()
-            self.chunking_complete = False
+            all_flashcards = []
 
-            def progress_callback(pdf_path, current_index, total, stage):
+            for i, pdf in enumerate(self.pdf_files):
                 if self.stop_processing:
-                    return False  # Signal to stop processing
-                if stage == 'chunking':
-                    pdf_name = os.path.basename(pdf_path)
-                    self.status_label.config(text=f"Chunking: {pdf_name} ({current_index + 1}/{total})")
-                    progress = ((current_index + 1) / total) * 100
-                elif stage == 'chunking_complete':
-                    self.chunking_complete = True
-                    self.progress.set(0)  # Reset progress bar to 0
-                    self.status_label.config(text="Chunking complete. Starting card generation...")
-                    self.master.update_idletasks()
-                    return
-                else:  # 'generating'
-                    self.status_label.config(text=f"Generating cards: Chunk {current_index + 1}/{total}")
-                    progress = ((current_index + 1) / total) * 100
+                    break
 
+                self.status_label.config(text=f"Generating cards for: {os.path.basename(self.pdf_paths[i])} ({i + 1}/{len(self.pdf_files)})")
+                flashcards = create_flashcards_with_rate_limit(MIN_CARDS, MAX_CARDS, pdf)
+                if flashcards:
+                    all_flashcards.extend(flashcards.split('\n'))
+
+                progress = ((i + 1) / len(self.pdf_files)) * 100
                 self.progress.set(progress)
                 self.master.update_idletasks()
 
-            all_flashcards = process_multiple_pdfs(self.pdf_paths, progress_callback)
             if self.stop_processing:
                 self.status_label.config(text="Generation stopped by user.", fg="orange")
             else:
-                total_cards = len(all_flashcards.split('\n'))
-                expected_min = 100 * len(self.pdf_paths)
-                expected_max = 200 * len(self.pdf_paths)
+                total_cards = len(all_flashcards)
+                expected_min = MIN_CARDS * len(self.pdf_files)
+                expected_max = MAX_CARDS * len(self.pdf_files)
                 if total_cards < expected_min:
-                    messagebox.showwarning("Warning",
-                                           f"Only {total_cards} cards were generated, which is less than the expected minimum of {expected_min}.")
+                    messagebox.showwarning("Warning", f"Only {total_cards} cards were generated, which is less than the expected minimum of {expected_min}.")
                 elif total_cards > expected_max:
-                    messagebox.showwarning("Warning",
-                                           f"{total_cards} cards were generated, which is more than the expected maximum of {expected_max}.")
+                    messagebox.showwarning("Warning", f"{total_cards} cards were generated, which is more than the expected maximum of {expected_max}.")
 
                 self.save_flashcards(all_flashcards)
                 self.status_label.config(text=f"Processing completed. Generated {total_cards} cards.", fg="green")
@@ -312,51 +225,33 @@ class FlashcardGeneratorGUI:
     def handle_unauthorized_error(self, error_message):
         self.progressbar.configure(style="Red.Horizontal.TProgressbar")
         self.status_label.config(text="API key unauthorized", fg="red")
-        messagebox.showerror("Unauthorized",
-                             f"API key is unauthorized. Please check your API key.\n\nError: {error_message}")
+        messagebox.showerror("Unauthorized", f"API key is unauthorized. Please check your API key.\n\nError: {error_message}")
         self.generate_button.config(state='disabled')
-        self.open_api_key_modal()  # Open the API key modal to allow the user to enter a new key
         self.master.after(100, self.open_api_key_modal)
-
 
     def handle_generation_error(self, error_message):
         self.progressbar.configure(style="Red.Horizontal.TProgressbar")
         self.status_label.config(text="Flashcard generation failed", fg="red")
         messagebox.showerror("Error", f"Flashcard generation failed:\n\n{error_message}")
-        self.generate_button.config(state='normal')  # Re-enable the generate button to allow retry
+        self.generate_button.config(state='normal')
 
     def handle_unexpected_error(self, error_message):
         self.progressbar.configure(style="Red.Horizontal.TProgressbar")
         self.status_label.config(text="An unexpected error occurred", fg="red")
         error_details = f"An unexpected error occurred:\n\n{error_message}\n\nStack Trace:\n{traceback.format_exc()}"
         messagebox.showerror("Unexpected Error", error_details)
-        self.generate_button.config(state='normal')  # Re-enable the generate button to allow retry
+        self.generate_button.config(state='normal')
+
     def save_flashcards(self, flashcards):
         if not self.output_path.get():
             messagebox.showerror("Error", "Please select an output file path.")
             return
 
         try:
-            # Split the flashcards string into a list of individual flashcards
-            flashcard_list = flashcards.split('\n')
-            save_to_file(flashcard_list, self.output_path.get())
+            save_to_file(flashcards, self.output_path.get())
             messagebox.showinfo("Success", f"Flashcards saved to {self.output_path.get()}")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save flashcards: {str(e)}")
-    def save_api_key_to_db(self, api_key):
-        db = TinyDB('api_keys.json')
-        db.insert({'api_key': api_key}) # TODO NAMESTI TINY DB MRZI ME AAAAAAAAAAAAAAAAAAAAAAA
-    def check_existing_api_key(self):
-        api_key = os.getenv('MISTRAL_API_KEY')
-        if api_key:
-            self.generate_button.config(state='normal')
-        else:
-            self.generate_button.config(state='disabled')
-            if not self.api_key_modal_open:
-                self.master.after(100, self.open_api_key_modal)
-
-
-
 
 if __name__ == "__main__":
     root = tk.Tk()

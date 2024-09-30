@@ -1,5 +1,8 @@
-mistralai
-tiktoken
-pdfplumber
-python-dotenv
-tinydb
+mistralai~=1.1.0
+tiktoken~=0.7.0
+pdfplumber~=0.11.4
+python-dotenv~=1.0.1
+tinydb~=4.8.0
+google~=3.0.0
+protobuf~=5.28.2
+pypdf~=5.0.1
