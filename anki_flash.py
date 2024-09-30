@@ -8,7 +8,7 @@ import google.generativeai as genai
 load_dotenv()
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 CACHE_FILE = 'api_cache.json'  # Currently unused, consider removing
-MODEL_NAME = "gemini-1.5-flash-002"
+MODEL_NAME = "gemini-1.5-pro"
 MIN_CARDS = 75
 MAX_CARDS = 200
 
@@ -65,7 +65,7 @@ def filter_pdf_pages(file_path, output_path):
 def create_flashcards_with_rate_limit(min_cards, max_cards, sample_pdf):
 
     max_retries = 3
-    prompt = f"""Generiši Anki kartice na srpskom jeziku (latinica) iz priloženog PDF dokumenta, fokusirajući se na ključne koncepte, definicije, formule, dijagrame, tabele i važne detalje vezane za temu dokumenta.  Cilj je kreirati 10-15 kartica po poglavlju (osim ako nije drugačije navedeno), osiguravajući pokrivenost svih bitnih informacija. Ukupan broj kartica treba da bude između {min_cards} i {max_cards}, gde je {min_cards} minimum a {max_cards} maksimum. Minimum {min_cards} kartica je obavezan.  Ako dokument ne sadrži poglavlja, podeli ga na logičke celine i generiši 10-15 kartica po celini, ukupno kartica ne sme da predje {max_cards}, uvek se trudi da bude sto blize {max_cards}.
+    prompt = f"""Generiši Anki kartice na srpskom jeziku (latinica) iz priloženog PDF dokumenta, fokusirajući se na ključne koncepte, definicije, formule, dijagrame, tabele i važne detalje vezane za temu dokumenta.  Cilj je kreirati 15-20 kartica po poglavlju (osim ako nije drugačije navedeno), osiguravajući pokrivenost svih bitnih informacija. Ukupan broj kartica treba da bude između {min_cards} i {max_cards}, gde je {min_cards} minimum a {max_cards} maksimum. Minimum {min_cards} kartica je obavezan.  Ako dokument ne sadrži poglavlja, podeli ga na logičke celine i generiši 15-20 kartica po celini, ukupno kartica ne sme da predje {max_cards}, uvek se trudi da bude {max_cards}.
 
 Pravila za kreiranje kartica:
 
