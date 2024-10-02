@@ -12,7 +12,7 @@ from anki_flash import save_to_file, FlashcardGenerationError, UnauthorizedError
 
 load_dotenv()
 API_KEY = os.getenv('GEMINI_API_KEY')
-MODEL_NAME = "gemini-1.5-pro"
+MODEL_NAME = "gemini-1.5-flash-latest"
 MIN_CARDS = 75
 MAX_CARDS = 200
 

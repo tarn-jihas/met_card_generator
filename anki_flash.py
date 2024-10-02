@@ -8,7 +8,7 @@ import google.generativeai as genai
 load_dotenv()
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 CACHE_FILE = 'api_cache.json'  # Currently unused, consider removing
-MODEL_NAME = "gemini-1.5-pro"
+MODEL_NAME = "gemini-1.5-flash-latest"
 MIN_CARDS = 75
 MAX_CARDS = 200
 
